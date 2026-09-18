@@ -76,8 +76,6 @@
       badge.src = weapon.badge;
       badge.onerror = function () { badge.remove(); };
       card.appendChild(badge);
-    } else if (weapon.stars) {
-      card.appendChild(el("span", "stars", new Array(weapon.stars + 1).join("★")));
     }
     return card;
   }

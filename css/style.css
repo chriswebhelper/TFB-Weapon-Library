@@ -111,17 +111,6 @@ body {
   z-index: 2;
 }
 
-.card .stars {
-  position: absolute;
-  right: 6px;
-  bottom: 4px;
-  color: #fff;
-  font-size: 1.15rem;
-  letter-spacing: -1px;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
-  z-index: 2;
-}
-
 .card img.badge {
   position: absolute;
   right: 8px;
@@ -207,7 +196,6 @@ body {
   --card: var(--reel-card);
 }
 .strip .card .name { display: none; }
-.strip .card .stars { font-size: 0.85rem; }
 .strip .card.winner { outline: 2px solid var(--yellow); outline-offset: -2px; }
 
 .drops-title { text-align: center; color: var(--yellow); margin: 26px 0 12px; font-size: 1.05rem; }
