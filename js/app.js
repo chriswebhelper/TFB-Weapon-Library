@@ -228,6 +228,7 @@
   function buildNav() {
     navEl.innerHTML = "";
     CATEGORIES.forEach(function (c) {
+      if (c.spinOnly) return;
       var a = el("a", null, c.tab);
       a.href = "#" + c.id;
       a.dataset.route = c.id;
