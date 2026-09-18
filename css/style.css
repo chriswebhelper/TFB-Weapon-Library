@@ -1,0 +1,240 @@
+:root {
+  --bg: #0e0e0e;
+  --panel: #14151b;
+  --purple: #a855f7;
+  --cyan: #67e8f9;
+  --yellow: #facc15;
+  --text: #e8e8ee;
+  --card: 170px;          /* card size on the tier pages */
+  --reel-card: 104px;     /* card size inside the spinner */
+  --gap: 14px;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Orbitron", "Segoe UI", system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+/* ---------- Header + nav ---------- */
+.site-header { text-align: center; padding: 22px 16px 0; }
+
+.site-header h1 {
+  margin: 0 0 14px;
+  color: var(--purple);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 4vw, 2.3rem);
+  letter-spacing: 0.02em;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.nav a {
+  color: var(--purple);
+  text-decoration: none;
+  font-size: 0.85rem;
+  padding: 7px 14px;
+  border: 1px solid rgba(168, 85, 247, 0.45);
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+.nav a:hover { background: rgba(168, 85, 247, 0.15); }
+.nav a.active { background: var(--purple); color: #0e0e0e; border-color: var(--purple); }
+
+/* ---------- Section heading ---------- */
+.view { max-width: 1100px; margin: 0 auto; padding: 8px 16px 60px; }
+
+.section-title {
+  text-align: center;
+  color: var(--purple);
+  font-weight: 400;
+  font-size: 1.2rem;
+  margin: 14px 0 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #2a2a30;
+}
+
+/* ---------- Weapon grid ---------- */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap);
+  margin-top: 16px;
+}
+
+/* ---------- Weapon card ---------- */
+.card {
+  position: relative;
+  width: var(--card);
+  height: var(--card);
+  border-radius: 8px;
+  border: 1px solid rgba(110, 200, 255, 0.75);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.card img.gun {
+  width: 92%;
+  height: 80%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.6));
+  pointer-events: none;
+  user-select: none;
+}
+
+.card .name {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  max-width: calc(100% - 12px);
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.45);
+  font-size: 0.72rem;
+  line-height: 1.25;
+  color: #fff;
+  z-index: 2;
+}
+
+.card .stars {
+  position: absolute;
+  right: 6px;
+  bottom: 4px;
+  color: #fff;
+  font-size: 1.15rem;
+  letter-spacing: -1px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  z-index: 2;
+}
+
+.card img.badge {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+/* Colours by star level -- change these to restyle a tier */
+.r1 { background: radial-gradient(circle at 50% 45%, #8d929c 0%, #565a63 70%, #3f424a 100%); }
+.r2 { background: linear-gradient(160deg, #58b300, #469400); }
+.r3 { background: radial-gradient(circle at 50% 40%, #12a0f0 0%, #0a83c9 100%); }
+.r4 { background: radial-gradient(circle at 50% 45%, #b458d4 0%, #8a2bb0 75%, #74229a 100%); }
+.r5 { background: radial-gradient(circle at 50% 45%, #ec8a2c 0%, #d97418 100%); }
+.r6 { background: radial-gradient(circle at 50% 45%, #dcc25a 0%, #c2a233 100%); }
+
+/* ---------- Spinner page ---------- */
+.spin-sub { text-align: center; color: var(--cyan); margin: 8px 0 14px; font-size: 1rem; }
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 0.95rem;
+}
+
+.controls select,
+.controls button {
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--yellow);
+  background: #1c1d2b;
+  border: 1px solid rgba(168, 85, 247, 0.6);
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.controls select option { background: #1c1d2b; color: var(--yellow); }
+.controls button { color: var(--purple); padding: 8px 22px; }
+.controls button:hover:not(:disabled) { background: rgba(168, 85, 247, 0.18); }
+.controls button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.reel-wrap {
+  margin: 22px auto 0;
+  max-width: 900px;
+  padding: 34px 16px;
+  background: var(--panel);
+  border: 1px solid #23242f;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.reel {
+  position: relative;
+  overflow: hidden;
+  height: calc(var(--reel-card) + 8px);
+}
+
+.reel .marker {
+  position: absolute;
+  left: 50%;
+  top: -6px;
+  bottom: -6px;
+  width: 3px;
+  margin-left: -1.5px;
+  background: var(--yellow);
+  box-shadow: 0 0 8px rgba(250, 204, 21, 0.8);
+  z-index: 5;
+}
+
+.strip {
+  display: flex;
+  gap: 10px;
+  padding-top: 4px;
+  will-change: transform;
+}
+
+.strip .card {
+  --card: var(--reel-card);
+}
+.strip .card .name { display: none; }
+.strip .card .stars { font-size: 0.85rem; }
+.strip .card.winner { outline: 2px solid var(--yellow); outline-offset: -2px; }
+
+.drops-title { text-align: center; color: var(--yellow); margin: 26px 0 12px; font-size: 1.05rem; }
+.drops { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; min-height: 40px; }
+.drops .card { --card: 130px; box-shadow: 0 0 12px rgba(110, 200, 255, 0.35); }
+.drops .card .name { font-size: 0.66rem; }
+.empty { color: #6b6f7b; font-size: 0.85rem; align-self: center; }
+
+.clear-btn {
+  display: block;
+  margin: 16px auto 0;
+  font-family: inherit;
+  font-size: 0.75rem;
+  color: #8a8fa0;
+  background: none;
+  border: 1px solid #33343f;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.clear-btn:hover { color: #fff; border-color: #55566a; }
+
+/* ---------- Small screens ---------- */
+@media (max-width: 720px) {
+  :root { --card: 150px; --reel-card: 88px; --gap: 10px; }
+  .reel-wrap { padding: 24px 8px; }
+}
+@media (max-width: 400px) {
+  :root { --card: 44vw; }
+}
