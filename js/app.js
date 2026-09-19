@@ -8,6 +8,7 @@
 
   var PLACEHOLDER = "images/placeholder.svg";
   var SPIN_MS = 5500;          // how long the spin animation lasts
+  var SPIN_GAP_MS = 350;       // pause between back-to-back spins in a multi-gun pull
   var STRIP_LENGTH = 60;       // number of cards in the reel
   var WIN_INDEX_MIN = 44;      // the winning card sits somewhere in this range
   var WIN_INDEX_MAX = 52;
@@ -58,10 +59,16 @@
   var TIER_ORDER = ["1", "1.5", "2"];
 
   function spinPoolFor(categoryId) {
+    if (categoryId === "refill") return WEAPONS.filter(function (w) { return w.tier === "1"; });
     var idx = TIER_ORDER.indexOf(categoryId);
     if (idx === -1) return poolFor(categoryId);
     var allowedTiers = TIER_ORDER.slice(0, idx + 1);
     return WEAPONS.filter(function (w) { return allowedTiers.indexOf(w.tier) !== -1; });
+  }
+
+  // How many guns a single spin of this option awards.
+  function spinCountFor(categoryId) {
+    return (categoryId === "test" || categoryId === "refill") ? 1 : 4;
   }
 
   /* ----------------------------------------------------------------- card */
@@ -162,19 +169,8 @@
 
     var spinning = false;
 
-    spinBtn.addEventListener("click", function () {
-      if (spinning) return;
-      var pool = spinPoolFor(select.value);
-      if (!pool.length) {
-        dropsEl.innerHTML = "";
-        dropsEl.appendChild(el("span", "empty", "That section has no weapons yet."));
-        return;
-      }
-
-      spinning = true;
-      spinBtn.disabled = true;
-      select.disabled = true;
-
+    // Runs one reel animation against pool and calls onDone(winner) once it lands.
+    function spinOnce(pool, onDone) {
       // 1. Decide the result FIRST, using weighted odds
       var winner = pickWeighted(pool);
 
@@ -214,17 +210,44 @@
         strip.removeEventListener("transitionend", onEnd);
         var winCard = strip.querySelector('[data-win="1"]');
         if (winCard) winCard.classList.add("winner");
-        drops.push(winner);
-        renderDrops();
-        spinning = false;
-        spinBtn.disabled = false;
-        select.disabled = false;
+        onDone(winner);
       }
       function onEnd(e) {
         if (e.target === strip && e.propertyName === "transform") finish();
       }
       strip.addEventListener("transitionend", onEnd);
       window.setTimeout(finish, SPIN_MS + 400); // safety net
+    }
+
+    spinBtn.addEventListener("click", function () {
+      if (spinning) return;
+      var pool = spinPoolFor(select.value);
+      if (!pool.length) {
+        dropsEl.innerHTML = "";
+        dropsEl.appendChild(el("span", "empty", "That section has no weapons yet."));
+        return;
+      }
+
+      spinning = true;
+      spinBtn.disabled = true;
+      select.disabled = true;
+
+      var spinsLeft = spinCountFor(select.value);
+      function runNext() {
+        if (spinsLeft <= 0) {
+          spinning = false;
+          spinBtn.disabled = false;
+          select.disabled = false;
+          return;
+        }
+        spinsLeft--;
+        spinOnce(pool, function (winner) {
+          drops.push(winner);
+          renderDrops();
+          window.setTimeout(runNext, SPIN_GAP_MS);
+        });
+      }
+      runNext();
     });
   }
 
@@ -252,7 +275,8 @@
   }
 
   function route() {
-    var hash = decodeURIComponent(location.hash.replace(/^#/, "")) || CATEGORIES[0].id;
+    var navCats = CATEGORIES.filter(function (c) { return !c.spinOnly; });
+    var hash = decodeURIComponent(location.hash.replace(/^#/, "")) || navCats[0].id;
     Array.prototype.forEach.call(navEl.children, function (a) {
       a.classList.toggle("active", a.dataset.route === hash);
     });
@@ -260,7 +284,7 @@
       renderSpinner();
       return;
     }
-    var cat = CATEGORIES.filter(function (c) { return c.id === hash; })[0] || CATEGORIES[0];
+    var cat = CATEGORIES.filter(function (c) { return c.id === hash; })[0] || navCats[0];
     renderCategory(cat);
   }
 

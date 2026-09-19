@@ -24,6 +24,7 @@ window.RARITY = {
 /* ---- Sections (each one becomes a tab AND an option in the spin dropdown,
    unless spinOnly is set -- then it's spin-dropdown-only, no tab/page) ---- */
 window.CATEGORIES = [
+  { id: "refill",    tab: "Refill",    title: "Refill Weapons", spinOnly: true },
   { id: "1",         tab: "Tier 1",    title: "Tier 1 Weapons"   },
   { id: "1.5",       tab: "Tier 1.5",  title: "Tier 1.5 Weapons" },
   { id: "2",         tab: "Tier 2",    title: "Tier 2 Weapons"   }
