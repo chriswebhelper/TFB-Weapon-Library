@@ -68,7 +68,9 @@
 
   // How many guns a single spin of this option awards.
   function spinCountFor(categoryId) {
-    return (categoryId === "test" || categoryId === "refill") ? 1 : 4;
+    if (categoryId === "refill") return 1;
+    if (categoryId === "test") return 2;
+    return 4;
   }
 
   /* ----------------------------------------------------------------- card */
@@ -118,13 +120,15 @@
 
     var select = el("select");
     select.id = "tierSelect";
-    var opt = el("option", null, "Test Drops");
-    opt.value = "test";
-    select.appendChild(opt);
     CATEGORIES.forEach(function (c) {
       var o = el("option", null, c.tab);
       o.value = c.id;
       select.appendChild(o);
+      if (c.id === "refill") {
+        var testOpt = el("option", null, "Test Drops");
+        testOpt.value = "test";
+        select.appendChild(testOpt);
+      }
     });
     controls.appendChild(select);
 
@@ -160,7 +164,7 @@
     renderDrops();
 
     // Show a preview reel before the first spin
-    fillIdleStrip(strip, poolFor("test"));
+    fillIdleStrip(strip, spinPoolFor(select.value));
 
     clearBtn.addEventListener("click", function () {
       drops = [];
@@ -168,6 +172,12 @@
     });
 
     var spinning = false;
+
+    // Switching tiers resets the reel back to an idle preview of the new pool
+    select.addEventListener("change", function () {
+      if (spinning) return;
+      fillIdleStrip(strip, spinPoolFor(select.value));
+    });
 
     // Runs one reel animation against pool and calls onDone(winner) once it lands.
     function spinOnce(pool, onDone) {
@@ -252,6 +262,7 @@
   }
 
   function fillIdleStrip(strip, pool) {
+    strip.style.transition = "none";
     strip.innerHTML = "";
     for (var i = 0; i < 14; i++) strip.appendChild(makeCard(pickWeighted(pool)));
     // centre the preview a little so the marker sits over a card
