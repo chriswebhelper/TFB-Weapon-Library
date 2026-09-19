@@ -53,6 +53,17 @@
     return WEAPONS.filter(function (w) { return w.tier === categoryId; });
   }
 
+  // Lowest tier first. A spin for a given tier also pulls from every tier
+  // before it in this list, so higher spins can still land lower-tier guns.
+  var TIER_ORDER = ["1", "1.5", "2"];
+
+  function spinPoolFor(categoryId) {
+    var idx = TIER_ORDER.indexOf(categoryId);
+    if (idx === -1) return poolFor(categoryId);
+    var allowedTiers = TIER_ORDER.slice(0, idx + 1);
+    return WEAPONS.filter(function (w) { return allowedTiers.indexOf(w.tier) !== -1; });
+  }
+
   /* ----------------------------------------------------------------- card */
   function makeCard(weapon) {
     var card = el("div", "card r" + Math.min(Math.max(weapon.stars || 1, 1), 6));
@@ -153,7 +164,7 @@
 
     spinBtn.addEventListener("click", function () {
       if (spinning) return;
-      var pool = poolFor(select.value);
+      var pool = spinPoolFor(select.value);
       if (!pool.length) {
         dropsEl.innerHTML = "";
         dropsEl.appendChild(el("span", "empty", "That section has no weapons yet."));
