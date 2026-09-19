@@ -26,8 +26,7 @@ window.RARITY = {
 window.CATEGORIES = [
   { id: "1",         tab: "Tier 1",    title: "Tier 1 Weapons"   },
   { id: "1.5",       tab: "Tier 1.5",  title: "Tier 1.5 Weapons" },
-  { id: "2",         tab: "Tier 2",    title: "Tier 2 Weapons"   },
-  { id: "refill",    tab: "Refill",    title: "Refill Weapons", spinOnly: true }
+  { id: "2",         tab: "Tier 2",    title: "Tier 2 Weapons"   }
 ];
 
 /* ---- Weapons ---------------------------------------------------------------
@@ -35,7 +34,7 @@ window.CATEGORIES = [
 
    name        text shown on the card
    stars       1-6 (sets card colour, star count and default drop chance)
-   categoryId  one of the ids above ("1", "1.5", "2", "refill")
+   categoryId  one of the ids above ("1", "1.5", "2")
    extras      optional: {
                  image:  "images/weapons/my-gun.png",   // your render; falls back to placeholder
                  badge:  "images/badges/my-badge.png",  // small round icon, bottom-right
@@ -93,11 +92,10 @@ window.WEAPONS = [
   w("Volt Vector", 6, "2", { image: "images/weapons/Tier 2/volt-vector.svg" }),
   w("Apex CX", 6, "2", { image: "images/weapons/Tier 2/apex-cx.svg" }),
 
-  /* Refill -- drop images in images/weapons/Refill/ */
-  w("Standard Issue", 1, "refill", { image: "images/weapons/Refill/standard-issue.svg" }),
-  w("Supply Pistol", 1, "refill", { image: "images/weapons/Refill/supply-pistol.svg" }),
-  w("Field Pistol", 2, "refill", { image: "images/weapons/Refill/field-pistol.svg" }),
-  w("Ammo Runner", 2, "refill", { image: "images/weapons/Refill/ammo-runner.svg" }),
-  w("Trooper 9", 2, "refill", { image: "images/weapons/Refill/trooper-9.svg" }),
-  w("Patrol 40", 2, "refill", { image: "images/weapons/Refill/patrol-40.svg" })
+  w("Standard Issue", 1, "1", { image: "images/weapons/Tier 1/standard-issue.svg" }),
+  w("Supply Pistol", 1, "1", { image: "images/weapons/Tier 1/supply-pistol.svg" }),
+  w("Field Pistol", 2, "1", { image: "images/weapons/Tier 1/field-pistol.svg" }),
+  w("Ammo Runner", 2, "1", { image: "images/weapons/Tier 1/ammo-runner.svg" }),
+  w("Trooper 9", 2, "1", { image: "images/weapons/Tier 1/trooper-9.svg" }),
+  w("Patrol 40", 2, "1", { image: "images/weapons/Tier 1/patrol-40.svg" })
 ];
