@@ -9,7 +9,7 @@ window.SITE = {
   spinLabel: "Simulate a faction drop spin"
 };
 
-/* ---- Star levels: card colour is set in css/style.css (.r1 ... .r6) -------
+/* ---- Star levels: card colour is set in css/style.css (.r1 ... .r5) -------
    weight = how likely this star level is to drop in the spinner.
    Higher number = more common. Odds are weight / (sum of weights in the pool). */
 window.RARITY = {
@@ -17,8 +17,7 @@ window.RARITY = {
   2: { weight: 26 },
   3: { weight: 20 },
   4: { weight: 12 },
-  5: { weight: 7  },
-  6: { weight: 2  }
+  5: { weight: 7  }
 };
 
 /* ---- Sections (each one becomes a tab AND an option in the spin dropdown,
@@ -34,7 +33,7 @@ window.CATEGORIES = [
    w(name, stars, categoryId, extras)
 
    name        text shown on the card
-   stars       1-6 (sets card colour, star count and default drop chance)
+   stars       1-5 (sets card colour, star count and default drop chance)
    categoryId  one of the ids above ("1", "1.5", "2")
    extras      optional: {
                  image:  "images/weapons/my-gun.png",   // your render; falls back to placeholder
@@ -51,9 +50,9 @@ window.WEAPONS = [
   /* Tier 1 -- drop images in images/weapons/Tier 1/ */
   w("Beretta M9", 1, "1", { image: "images/weapons/Tier 1/berreta-m9.png" }),
   w("Walther PPK", 1, "1", { image: "images/weapons/Tier 1/walter-ppk.png" }),
-  w("Ghost Glock", 2, "1", { image: "images/weapons/Tier 1/ghost-glock.png" }),
-  w("Glock 43X", 2, "1", { image: "images/weapons/Tier 1/glock-43x.png" }),
-  w("Walther P88", 3, "1", { image: "images/weapons/Tier 1/walter-p88.png" }),
+  w("Ghost Glock", 3, "1", { image: "images/weapons/Tier 1/ghost-glock.png" }),
+  w("Glock 43X", 3, "1", { image: "images/weapons/Tier 1/glock-43x.png" }),
+  w("Walther P88", 2, "1", { image: "images/weapons/Tier 1/walter-p88.png" }),
 
   /* Tier 1.5 -- drop images in images/weapons/Tier 1.5/ */
   w("1911", 4, "1.5", { image: "images/weapons/Tier 1.5/1911.png" }),
@@ -67,5 +66,5 @@ window.WEAPONS = [
   w("Sig P320", 4, "2", { image: "images/weapons/Tier 2/sig-p320.png" }),
   w("Mac-10", 4, "2", { image: "images/weapons/Tier 2/mac-10.png" }),
   w("Tec-9", 5, "2", { image: "images/weapons/Tier 2/tec-9.png" }),
-  w("Lebedev PL-14", 6, "2", { image: "images/weapons/Tier 2/lebedev-pl14.png" })
+  w("Lebedev PL-14", 3, "2", { image: "images/weapons/Tier 2/lebedev-pl14.png" })
 ];
